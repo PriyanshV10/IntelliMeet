@@ -1,8 +1,8 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 import tempfile
 import os
-from services import transcription, pdf_extractor
-from models.schemas import TranscriptionResponse, PDFExtractionResponse
+from services import transcription, pdf_extractor, video_processor
+from models.schemas import TranscriptionResponse, PDFExtractionResponse, VideoExtractionResponse
 
 router = APIRouter(
     prefix="/process",
@@ -55,6 +55,31 @@ async def process_pdf(file: UploadFile = File(...)):
         pages = pdf_extractor.extract_pdf(tmp_path)
         
         return {"pages": pages}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
+
+@router.post("/video", response_model=VideoExtractionResponse)
+async def process_video(file: UploadFile = File(...)):
+    """
+    Accept .mp4, extract frames every 5s, run OCR, return text.
+    """
+    # Validate file extension
+    ext = os.path.splitext(file.filename)[1].lower()
+    if ext not in [".mp4", ".mov", ".avi", ".mkv"]:
+        raise HTTPException(status_code=400, detail="Unsupported file format. Please upload a video file.")
+    
+    try:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=ext) as tmp:
+            tmp.write(await file.read())
+            tmp_path = tmp.name
+            
+        # Run extraction
+        frames = video_processor.extract_frames_and_ocr(tmp_path, interval_seconds=5)
+        
+        return {"frames": frames}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     finally:

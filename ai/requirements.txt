@@ -3,3 +3,5 @@ uvicorn
 openai-whisper
 python-multipart
 pymupdf
+opencv-python
+pytesseract

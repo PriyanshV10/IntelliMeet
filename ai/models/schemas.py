@@ -17,3 +17,11 @@ class PDFPage(BaseModel):
 
 class PDFExtractionResponse(BaseModel):
     pages: List[PDFPage]
+
+class VideoFrame(BaseModel):
+    timestamp_seconds: int
+    timestamp_display: str
+    ocr_text: str
+
+class VideoExtractionResponse(BaseModel):
+    frames: List[VideoFrame]
