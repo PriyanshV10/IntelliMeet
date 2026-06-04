@@ -3,4 +3,4 @@ temp/
 __pycache__/
 *.pyc
 ai/venv/
-venv/
+venv/ai/chroma_data/

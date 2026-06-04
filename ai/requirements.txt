@@ -5,3 +5,5 @@ python-multipart
 pymupdf
 opencv-python
 pytesseract
+chromadb
+sentence-transformers

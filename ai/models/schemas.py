@@ -25,3 +25,16 @@ class VideoFrame(BaseModel):
 
 class VideoExtractionResponse(BaseModel):
     frames: List[VideoFrame]
+
+class ChunkData(BaseModel):
+    chunk_id: str
+    text: str
+    metadata: Optional[dict] = None
+
+class StoreChunksRequest(BaseModel):
+    meeting_id: str
+    chunks: List[ChunkData]
+
+class StoreChunksResponse(BaseModel):
+    stored: int
+    meeting_id: str

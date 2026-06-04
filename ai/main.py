@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import process
+from routers import process, embed
 
 app = FastAPI(
     title="Meeting Intelligence Assistant - AI Service",
@@ -8,6 +8,7 @@ app = FastAPI(
 )
 
 app.include_router(process.router)
+app.include_router(embed.router)
 
 @app.get("/")
 def root():
