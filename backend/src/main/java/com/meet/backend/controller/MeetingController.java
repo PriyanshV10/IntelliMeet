@@ -47,4 +47,11 @@ public class MeetingController {
 
     return ResponseEntity.accepted().body(meeting);
   }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Meeting> getMeeting(@PathVariable java.util.UUID id) {
+    return meetingRepository.findById(id)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
+  }
 }
