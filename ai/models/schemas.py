@@ -38,3 +38,15 @@ class StoreChunksRequest(BaseModel):
 class StoreChunksResponse(BaseModel):
     stored: int
     meeting_id: str
+
+class QueryRequest(BaseModel):
+    meeting_id: str
+    question: str
+
+class QuerySource(BaseModel):
+    text: str
+    metadata: Optional[dict] = None
+
+class QueryResponse(BaseModel):
+    answer: str
+    sources: List[QuerySource]

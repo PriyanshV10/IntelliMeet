@@ -36,3 +36,30 @@ def store_chunks(meeting_id: str, chunks: list):
     )
     
     return len(ids)
+
+def query_chunks(meeting_id: str, query_text: str, top_k: int = 5):
+    """
+    Search ChromaDB for chunks matching the query_text, filtered by meeting_id.
+    """
+    from services.embedder import get_embeddings
+    
+    query_embedding = get_embeddings([query_text])[0]
+    
+    results = collection.query(
+        query_embeddings=[query_embedding],
+        n_results=top_k,
+        where={"meeting_id": meeting_id}
+    )
+    
+    # Extract the matched documents and metadata
+    documents = results.get("documents", [[]])[0]
+    metadatas = results.get("metadatas", [[]])[0]
+    
+    chunks = []
+    for doc, meta in zip(documents, metadatas):
+        chunks.append({
+            "text": doc,
+            "metadata": meta
+        })
+        
+    return chunks

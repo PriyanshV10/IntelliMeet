@@ -40,7 +40,7 @@ public class UploadService {
 
       Path targetPath = Paths.get(root).resolve(fileName);
       Files.copy(file.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
-      
+
       return targetPath.toAbsolutePath().toString();
     } catch (Exception e) {
       throw new RuntimeException("Could not store file " + e.getMessage());

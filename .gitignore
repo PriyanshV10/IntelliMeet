@@ -1,6 +1,11 @@
-.gitignore
 temp/
 __pycache__/
 *.pyc
 ai/venv/
-venv/ai/chroma_data/
+ai/chroma_data/
+backend/target/
+backend/uploads/
+.idea/
+*.iml
+.DS_Store
+**/.vscode
