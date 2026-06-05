@@ -49,4 +49,13 @@ public class AIServiceClient {
   public void storeChunks(Map<String, Object> payload) {
     restTemplate.postForLocation(baseUrl + "/embed/store", payload, Map.class);
   }
+
+  public Map<String, Object> queryMeeting(String meetingId, String question) {
+    Map<String, Object> payload = Map.of(
+        "meeting_id", meetingId,
+        "question", question
+    );
+    ResponseEntity<Map> response = restTemplate.postForEntity(baseUrl + "/query/", payload, Map.class);
+    return response.getBody();
+  }
 }
