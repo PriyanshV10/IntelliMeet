@@ -54,4 +54,9 @@ public class MeetingController {
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
   }
+
+  @GetMapping
+  public ResponseEntity<java.util.List<Meeting>> getAllMeetings() {
+    return ResponseEntity.ok(meetingRepository.findAll(org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "createdAt")));
+  }
 }

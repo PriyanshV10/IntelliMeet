@@ -1,8 +1,8 @@
 from sentence_transformers import SentenceTransformer
 from typing import List
 
-# Using a lightweight model as recommended in the roadmap
-model = SentenceTransformer("all-MiniLM-L6-v2")
+# Upgrading to a highly accurate state-of-the-art embedding model
+model = SentenceTransformer("BAAI/bge-large-en-v1.5")
 
 def get_embeddings(texts: List[str]) -> List[List[float]]:
     """

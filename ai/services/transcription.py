@@ -3,8 +3,8 @@ import os
 import tempfile
 
 # Load the model at module level to avoid reloading it on every request
-# Using "base" model for a good balance of speed and accuracy, as per roadmap.
-model = whisper.load_model("base")
+# Upgrading to "medium" model and enforcing "cuda" device for GPU acceleration
+model = whisper.load_model("medium", device="cuda")
 
 def transcribe_audio(file_path: str):
     """

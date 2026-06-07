@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -21,6 +21,11 @@ export const uploadMeeting = async (title, audioFile, pdfFile, videoFile) => {
 
 export const getMeeting = async (id) => {
   const response = await apiClient.get(`/meetings/${id}`);
+  return response.data;
+};
+
+export const getAllMeetings = async () => {
+  const response = await apiClient.get('/meetings');
   return response.data;
 };
 
